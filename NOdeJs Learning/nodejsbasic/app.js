@@ -496,11 +496,100 @@
 
 
 
-//                      USER DEFINE MODULE
+//                      USER DEFINE MODULE AND EVENT DRIVEN LISTENER
 
+// const replaceHtml = require('./Modules/replaceHtml')
+// const fs = require('fs');
+// const html =fs.readFileSync('./Templet/index.html','utf-8');
+
+
+// const url = require('url');
+
+
+// let products =JSON.parse(fs.readFileSync('./Data/products.json', 'utf-8'));  //Json data into javascript object
+// let productlisthtml = fs.readFileSync("./Templet/product-list.html",'utf-8');
+// let productDetail =fs.readFileSync('./Templet/product-detail.html','utf-8');
+//                        //EVENT DRIVEN SERVER   LIKE 3 TYPE EVENT EMItTER, EVENTLISTENER, EVENTHANDELER 
+// const http = require('http');
+
+// //                           // CREATE SERVER
+
+
+
+                            
+// // SERVER INHERITS FROM EVENTEMITTER(OBSERVER PATTERN)
+
+// const server = http.createServer();
+// server.on('request',(request , response)=>{
+
+//     let {query, pathname: path}= url.parse( request.url, true);            // for id querry 
+//     //    console.log(urlPhase)
+//     // const path = request.url;
+//     if(path==='/' || path.toLocaleLowerCase() === '/home'){
+//         response.writeHead(200,{                              
+//             'Content-Type': ' text/html',
+//         });
+//         response.end(html.replace('{{%CONTENTS%}}','You are in home page'));
+    
+//     }
+//     else if( path.toLocaleLowerCase() === '/about'){
+//         response.writeHead(200,{                              //this is main for changing status
+//             'Content-Type': ' text/html',
+//         });
+//         response.end(html.replace('{{%CONTENTS%}}','You are in about page'))
+//     }
+//     else if( path.toLocaleLowerCase() === '/contact'){
+//         response.writeHead(200,{                              //this is main for changing status
+//             'Content-Type': ' text/html',
+//         });
+//         response.end(html.replace('{{%CONTENTS%}}','You are in contact page'))
+//     }
+//     else if( path.toLocaleLowerCase() === '/product'){
+//         if(!query.id){
+//             let prodArray = products.map((prod)=>{
+//                 return replaceHtml(productlisthtml, prod );
+//             })
+//         let productResponceHmtl=html.replace('{{%CONTENTS%}}', prodArray.join(','));
+//         response.writeHead(200,{                              
+//             'Content-Type': ' text/html',
+//         });
+//         response.end(productResponceHmtl);
+//     }
+//     else{
+        
+//         let prod = products[query.id]
+    
+//         let productDetailResponseHtml = replaceHtml(productDetail,prod);
+//         response.end(html.replace('{{%CONTENTS%}}',productDetailResponseHtml));
+//     }
+//     }     
+        
+        
+    
+//     else{
+//         response.writeHead(404,{                              //this is main for changing status
+//             'Content-Type': ' text/html',
+//         });
+//         response.end(html.replace('{{%CONTENTS%}}','ERROR 404: Page not found'))
+//     }
+// });
+
+// // START A SERVER
+
+// server.listen(8000, '127.0.0.1',()=>{
+//     console.log('Server started')
+// }) 
+
+
+
+
+
+//                             EMITTING A HANDELING CUSTOM EVENT
 const replaceHtml = require('./Modules/replaceHtml')
 const fs = require('fs');
+const events = require('events');
 const html =fs.readFileSync('./Templet/index.html','utf-8');
+const user = require('./Modules/user')
 
 
 const url = require('url');
@@ -509,86 +598,83 @@ const url = require('url');
 let products =JSON.parse(fs.readFileSync('./Data/products.json', 'utf-8'));  //Json data into javascript object
 let productlisthtml = fs.readFileSync("./Templet/product-list.html",'utf-8');
 let productDetail =fs.readFileSync('./Templet/product-detail.html','utf-8');
-
-
-// function replaceHtml(templet, product){
-//     let output = templet.replace('{{%NAME%}}', product.name);
-//     output = output.replace("{{%IMAGE%}}", product.productImage);
-//     output =output.replace("{{%MODELNAME%}}", product.modeName);
-//     output =output.replace('{{%MODELNO%}}', product.modelNumber);
-//     output =output.replace('{{%SIZE%}}', product.size);
-//     output =output.replace('{{%CAMERA%}}', product.camera);
-//     output =output.replace('{{%PRICE%}}', product.price);
-//     output =output.replace('{{%COLOR%}}', product.color);
-//     output =output.replace('{{%ID%}}', product.id);
-//     output =output.replace('{{%ROM%}}', product.ROM);
-//     output =output.replace('{{%DESC%}}', product.Description);
-    
-    
-//     return output;
-// }
-
-
-                        
+                       //EVENT DRIVEN SERVER   LIKE 3 TYPE EVENT EMItTER, EVENTLISTENER, EVENTHANDELER 
 const http = require('http');
 
 //                           // CREATE SERVER
-const server = http.createServer((request, response)=>{
-   let {query, pathname: path}= url.parse( request.url, true);            // for id querry 
-//    console.log(urlPhase)
-// const path = request.url;
-if(path==='/' || path.toLocaleLowerCase() === '/home'){
-    response.writeHead(200,{                              
-        'Content-Type': ' text/html',
-    });
-    response.end(html.replace('{{%CONTENTS%}}','You are in home page'));
 
-}
-else if( path.toLocaleLowerCase() === '/about'){
-    response.writeHead(200,{                              //this is main for changing status
-        'Content-Type': ' text/html',
-    });
-    response.end(html.replace('{{%CONTENTS%}}','You are in about page'))
-}
-else if( path.toLocaleLowerCase() === '/contact'){
-    response.writeHead(200,{                              //this is main for changing status
-        'Content-Type': ' text/html',
-    });
-    response.end(html.replace('{{%CONTENTS%}}','You are in contact page'))
-}
-else if( path.toLocaleLowerCase() === '/product'){
-    if(!query.id){
-        let prodArray = products.map((prod)=>{
-            return replaceHtml(productlisthtml, prod );
-        })
-    let productResponceHmtl=html.replace('{{%CONTENTS%}}', prodArray.join(','));
-    response.writeHead(200,{                              
-        'Content-Type': ' text/html',
-    });
-    response.end(productResponceHmtl);
-}
-else{
+
+
+                            
+// SERVER INHERITS FROM EVENTEMITTER(OBSERVER PATTERN)
+
+const server = http.createServer();
+server.on('request',(request , response)=>{
+
+    let {query, pathname: path}= url.parse( request.url, true);            // for id querry 
+    //    console.log(urlPhase)
+    // const path = request.url;
+    if(path==='/' || path.toLocaleLowerCase() === '/home'){
+        response.writeHead(200,{                              
+            'Content-Type': ' text/html',
+        });
+        response.end(html.replace('{{%CONTENTS%}}','You are in home page'));
     
-    let prod = products[query.id]
-
-    let productDetailResponseHtml = replaceHtml(productDetail,prod);
-    response.end(html.replace('{{%CONTENTS%}}',productDetailResponseHtml));
-}
-}     
+    }
+    else if( path.toLocaleLowerCase() === '/about'){
+        response.writeHead(200,{                              //this is main for changing status
+            'Content-Type': ' text/html',
+        });
+        response.end(html.replace('{{%CONTENTS%}}','You are in about page'))
+    }
+    else if( path.toLocaleLowerCase() === '/contact'){
+        response.writeHead(200,{                              //this is main for changing status
+            'Content-Type': ' text/html',
+        });
+        response.end(html.replace('{{%CONTENTS%}}','You are in contact page'))
+    }
+    else if( path.toLocaleLowerCase() === '/product'){
+        if(!query.id){
+            let prodArray = products.map((prod)=>{
+                return replaceHtml(productlisthtml, prod );
+            })
+        let productResponceHmtl=html.replace('{{%CONTENTS%}}', prodArray.join(','));
+        response.writeHead(200,{                              
+            'Content-Type': ' text/html',
+        });
+        response.end(productResponceHmtl);
+    }
+    else{
+        
+        let prod = products[query.id]
     
+        let productDetailResponseHtml = replaceHtml(productDetail,prod);
+        response.end(html.replace('{{%CONTENTS%}}',productDetailResponseHtml));
+    }
+    }     
+        
+        
     
+    else{
+        response.writeHead(404,{                              //this is main for changing status
+            'Content-Type': ' text/html',
+        });
+        response.end(html.replace('{{%CONTENTS%}}','ERROR 404: Page not found'))
+    }
+});
 
-else{
-    response.writeHead(404,{                              //this is main for changing status
-        'Content-Type': ' text/html',
-    });
-    response.end(html.replace('{{%CONTENTS%}}','ERROR 404: Page not found'))
-}
-
-})
-
-                            // START A SERVER
+// START A SERVER
 
 server.listen(8000, '127.0.0.1',()=>{
     console.log('Server started')
 }) 
+
+let myEmitter = new user();
+
+myEmitter.on('Usercreated',(id,name)=>{
+    console.log(`New user ${name} with ID ${id} created`)
+})
+myEmitter.on('Usercreated',(id,name)=>{
+    console.log(`New user ${name} with ID ${id} is added to database`)
+})
+myEmitter.emit('Usercreated',1,'Nishant');
