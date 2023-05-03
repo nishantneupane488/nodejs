@@ -232,69 +232,254 @@
 
 
                         //TRANSFORMATION OF JSON DATA INTO HTML
-const fs = require('fs');
-const html =fs.readFileSync('./Templet/index.html','utf-8');
+// const fs = require('fs');
+// const html =fs.readFileSync('./Templet/index.html','utf-8');
 
-let products =JSON.parse(fs.readFileSync('./Data/products.json', 'utf-8'));  //Json data into javascript object
-let productlisthtml = fs.readFileSync("./Templet/product-list.html",'utf-8');
-let productHtmlArray =products.map((prod)=>{
-        let output = productlisthtml.replace('{{%NAME%}}', prod.name);
-        output = output.replace("{{%IMAGE%}}", prod.productImage);
-        output =output.replace("{{%MODELNAME%}}", prod.modeName);
-        output =output.replace('{{%MODELNO%}}', prod.modelNumber);
-        output =output.replace('{{%SIZE%}}', prod.size);
-        output =output.replace('{{%CAMERA%}}', prod.camera);
-        output =output.replace('{{%PRICE%}}', prod.price);
-        output =output.replace('{{%COLOR%}}', prod.color);
-        return output;
-});
+// let products =JSON.parse(fs.readFileSync('./Data/products.json', 'utf-8'));  //Json data into javascript object
+// let productlisthtml = fs.readFileSync("./Templet/product-list.html",'utf-8');
+// let productHtmlArray =products.map((prod)=>{
+//         let output = productlisthtml.replace('{{%NAME%}}', prod.name);
+//         output = output.replace("{{%IMAGE%}}", prod.productImage);
+//         output =output.replace("{{%MODELNAME%}}", prod.modeName);
+//         output =output.replace('{{%MODELNO%}}', prod.modelNumber);
+//         output =output.replace('{{%SIZE%}}', prod.size);
+//         output =output.replace('{{%CAMERA%}}', prod.camera);
+//         output =output.replace('{{%PRICE%}}', prod.price);
+//         output =output.replace('{{%COLOR%}}', prod.color);
+//         return output;
+// });
                         
-const http = require('http');
+// const http = require('http');
 
-//                           // CREATE SERVER
-const server = http.createServer((request, response)=>{
-const path = request.url;
-if(path==='/' || path.toLocaleLowerCase() === '/home'){
-    response.writeHead(200,{                              
-        'Content-Type': ' text/html',
-    });
-    response.end(html.replace('{{%CONTENTS%}}','You are in home page'));
+// //                           // CREATE SERVER
+// const server = http.createServer((request, response)=>{
+// const path = request.url;
+// if(path==='/' || path.toLocaleLowerCase() === '/home'){
+//     response.writeHead(200,{                              
+//         'Content-Type': ' text/html',
+//     });
+//     response.end(html.replace('{{%CONTENTS%}}','You are in home page'));
 
-}
-else if( path.toLocaleLowerCase() === '/about'){
-    response.writeHead(200,{                              //this is main for changing status
-        'Content-Type': ' text/html',
-    });
-    response.end(html.replace('{{%CONTENTS%}}','You are in about page'))
-}
-else if( path.toLocaleLowerCase() === '/contact'){
-    response.writeHead(200,{                              //this is main for changing status
-        'Content-Type': ' text/html',
-    });
-    response.end(html.replace('{{%CONTENTS%}}','You are in contact page'))
-}
-else if( path.toLocaleLowerCase() === '/product'){
-    let productResponceHmtl=html.replace('{{%CONTENTS%}}', productHtmlArray  .join(','));
-    response.writeHead(200,{                              
-        'Content-Type': ' text/html',
-    });
-    response.end(productResponceHmtl);
-}
+// }
+// else if( path.toLocaleLowerCase() === '/about'){
+//     response.writeHead(200,{                              //this is main for changing status
+//         'Content-Type': ' text/html',
+//     });
+//     response.end(html.replace('{{%CONTENTS%}}','You are in about page'))
+// }
+// else if( path.toLocaleLowerCase() === '/contact'){
+//     response.writeHead(200,{                              //this is main for changing status
+//         'Content-Type': ' text/html',
+//     });
+//     response.end(html.replace('{{%CONTENTS%}}','You are in contact page'))
+// }
+// else if( path.toLocaleLowerCase() === '/product'){
+//     let productResponceHmtl=html.replace('{{%CONTENTS%}}', productHtmlArray  .join(','));
+//     response.writeHead(200,{                              
+//         'Content-Type': ' text/html',
+//     });
+//     response.end(productResponceHmtl);
+// }
         
     
     
 
-else{
-    response.writeHead(404,{                              //this is main for changing status
-        'Content-Type': ' text/html',
-    });
-    response.end(html.replace('{{%CONTENTS%}}','ERROR 404: Page not found'))
-}
+// else{
+//     response.writeHead(404,{                              //this is main for changing status
+//         'Content-Type': ' text/html',
+//     });
+//     response.end(html.replace('{{%CONTENTS%}}','ERROR 404: Page not found'))
+// }
 
-})
+// })
 
-                            // START A SERVER
+//                             // START A SERVER
 
-server.listen(8000, '127.0.0.1',()=>{
-    console.log('Server started')
-})                       
+// server.listen(8000, '127.0.0.1',()=>{
+//     console.log('Server started')
+// })                       
+
+
+
+
+
+//                  PARSING QUARRY STRING IN URL
+
+// const fs = require('fs');
+// const html =fs.readFileSync('./Templet/index.html','utf-8');
+// const url = require('url');
+
+
+// let products =JSON.parse(fs.readFileSync('./Data/products.json', 'utf-8'));  //Json data into javascript object
+// let productlisthtml = fs.readFileSync("./Templet/product-list.html",'utf-8');
+// let productHtmlArray =products.map((prod)=>{
+//         let output = productlisthtml.replace('{{%NAME%}}', prod.name);
+//         output = output.replace("{{%IMAGE%}}", prod.productImage);
+//         output =output.replace("{{%MODELNAME%}}", prod.modeName);
+//         output =output.replace('{{%MODELNO%}}', prod.modelNumber);
+//         output =output.replace('{{%SIZE%}}', prod.size);
+//         output =output.replace('{{%CAMERA%}}', prod.camera);
+//         output =output.replace('{{%PRICE%}}', prod.price);
+//         output =output.replace('{{%COLOR%}}', prod.color);
+//         output =output.replace('{{%ID%}}', prod.id);
+        
+//         return output;
+// });
+                        
+// const http = require('http');
+
+// //                           // CREATE SERVER
+// const server = http.createServer((request, response)=>{
+//    let {query, pathname: path}= url.parse( request.url, true);            // for id querry 
+// //    console.log(urlPhase)
+// // const path = request.url;
+// if(path==='/' || path.toLocaleLowerCase() === '/home'){
+//     response.writeHead(200,{                              
+//         'Content-Type': ' text/html',
+//     });
+//     response.end(html.replace('{{%CONTENTS%}}','You are in home page'));
+
+// }
+// else if( path.toLocaleLowerCase() === '/about'){
+//     response.writeHead(200,{                              //this is main for changing status
+//         'Content-Type': ' text/html',
+//     });
+//     response.end(html.replace('{{%CONTENTS%}}','You are in about page'))
+// }
+// else if( path.toLocaleLowerCase() === '/contact'){
+//     response.writeHead(200,{                              //this is main for changing status
+//         'Content-Type': ' text/html',
+//     });
+//     response.end(html.replace('{{%CONTENTS%}}','You are in contact page'))
+// }
+// else if( path.toLocaleLowerCase() === '/product'){
+//     if(!query.id){
+//     let productResponceHmtl=html.replace('{{%CONTENTS%}}', productHtmlArray  .join(','));
+//     response.writeHead(200,{                              
+//         'Content-Type': ' text/html',
+//     });
+//     response.end(productResponceHmtl);
+// }
+// else{
+//     response.end('This is product and its detail with id '+ query.id)
+// }
+// }     
+    
+    
+
+// else{
+//     response.writeHead(404,{                              //this is main for changing status
+//         'Content-Type': ' text/html',
+//     });
+//     response.end(html.replace('{{%CONTENTS%}}','ERROR 404: Page not found'))
+// }
+
+// })
+
+//                             // START A SERVER
+
+// server.listen(8000, '127.0.0.1',()=>{
+//     console.log('Server started')
+// })                  
+
+
+
+
+//                                   CREATING REUSABLE FUNCTION FOR DETAIL OF PRODUCT AND SISPLAYING PRODUCT ACCORDING TO ID
+
+
+
+
+// const fs = require('fs');
+// const html =fs.readFileSync('./Templet/index.html','utf-8');
+
+
+// const url = require('url');
+
+
+// let products =JSON.parse(fs.readFileSync('./Data/products.json', 'utf-8'));  //Json data into javascript object
+// let productlisthtml = fs.readFileSync("./Templet/product-list.html",'utf-8');
+// let productDetail =fs.readFileSync('./Templet/product-detail.html','utf-8');
+
+
+// function replaceHtml(templet, product){
+//     let output = templet.replace('{{%NAME%}}', product.name);
+//     output = output.replace("{{%IMAGE%}}", product.productImage);
+//     output =output.replace("{{%MODELNAME%}}", product.modeName);
+//     output =output.replace('{{%MODELNO%}}', product.modelNumber);
+//     output =output.replace('{{%SIZE%}}', product.size);
+//     output =output.replace('{{%CAMERA%}}', product.camera);
+//     output =output.replace('{{%PRICE%}}', product.price);
+//     output =output.replace('{{%COLOR%}}', product.color);
+//     output =output.replace('{{%ID%}}', product.id);
+//     output =output.replace('{{%ROM%}}', product.ROM);
+//     output =output.replace('{{%DESC%}}', product.Description);
+    
+    
+//     return output;
+// }
+
+
+                        
+// const http = require('http');
+
+// //                           // CREATE SERVER
+// const server = http.createServer((request, response)=>{
+//    let {query, pathname: path}= url.parse( request.url, true);            // for id querry 
+// //    console.log(urlPhase)
+// // const path = request.url;
+// if(path==='/' || path.toLocaleLowerCase() === '/home'){
+//     response.writeHead(200,{                              
+//         'Content-Type': ' text/html',
+//     });
+//     response.end(html.replace('{{%CONTENTS%}}','You are in home page'));
+
+// }
+// else if( path.toLocaleLowerCase() === '/about'){
+//     response.writeHead(200,{                              //this is main for changing status
+//         'Content-Type': ' text/html',
+//     });
+//     response.end(html.replace('{{%CONTENTS%}}','You are in about page'))
+// }
+// else if( path.toLocaleLowerCase() === '/contact'){
+//     response.writeHead(200,{                              //this is main for changing status
+//         'Content-Type': ' text/html',
+//     });
+//     response.end(html.replace('{{%CONTENTS%}}','You are in contact page'))
+// }
+// else if( path.toLocaleLowerCase() === '/product'){
+//     if(!query.id){
+//         let prodArray = products.map((prod)=>{
+//             return replaceHtml(productlisthtml, prod );
+//         })
+//     let productResponceHmtl=html.replace('{{%CONTENTS%}}', prodArray.join(','));
+//     response.writeHead(200,{                              
+//         'Content-Type': ' text/html',
+//     });
+//     response.end(productResponceHmtl);
+// }
+// else{
+    
+//     let prod = products[query.id]
+
+//     let productDetailResponseHtml = replaceHtml(productDetail,prod);
+//     response.end(html.replace('{{%CONTENTS%}}',productDetailResponseHtml));
+// }
+// }     
+    
+    
+
+// else{
+//     response.writeHead(404,{                              //this is main for changing status
+//         'Content-Type': ' text/html',
+//     });
+//     response.end(html.replace('{{%CONTENTS%}}','ERROR 404: Page not found'))
+// }
+
+// })
+
+//                             // START A SERVER
+
+// server.listen(8000, '127.0.0.1',()=>{
+//     console.log('Server started')
+// })                  
