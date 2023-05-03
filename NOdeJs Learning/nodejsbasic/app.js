@@ -743,3 +743,5 @@ server.on('request',(req,res)=>{
     rs.pipe(res);
     //ONLY USED IN READABLE SOURCE OR READABLE STREAM(WRITABLE DATA LIKE (RES))
 })
+
+//                            WHAT IS NPM AND PACKAGES IN NODE
