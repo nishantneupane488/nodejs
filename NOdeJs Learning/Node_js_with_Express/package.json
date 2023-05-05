@@ -10,6 +10,9 @@
     "type": "git",
     "url": "git+https://github.com/nishantneupane488/nodejs.git"
   },
+  "scripts":{
+    "start": " nodemon server.js"
+  },
   "author": "Nishant Neupane",
   "license": "ISC",
   "bugs": {
