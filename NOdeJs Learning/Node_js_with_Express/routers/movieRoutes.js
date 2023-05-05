@@ -2,9 +2,12 @@ const express =require('express')
 const moviesCOntroller = require('./../controllers/moviesController')
 
 const router = express.Router();
+
+router.param('id',moviesCOntroller.checkId)
+
 router.route('/')
  .get(moviesCOntroller.getAllMovie)
- .post(moviesCOntroller.createMovie)
+ .post(moviesCOntroller.validatebody, moviesCOntroller.createMovie)  //CHAINING MIDDLE WERE
 
  router.route('/:id')
 .get(moviesCOntroller.getMovie)
